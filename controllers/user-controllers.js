@@ -1,0 +1,72 @@
+//require the models folder for the Object we need
+const { User, Thought } = require('../models');
+
+//declare a variable for an object of functions for user controller
+
+const userController = {
+    //get request for all users
+    getAllUsers(req,res) {
+        User.find({}).select('-__v')
+        .then(userData => res.json(userData))
+        .catch(err => {
+            console.log(err);
+            res.status(500).json(err);
+        })
+    },
+
+    //get request for a user based on ID
+    getUserById({ params }, res) {
+        User.findOne({_id: params.id }).populate([
+            {path: 'thoughts', select: "-__v"},
+            {path: 'friends', select: "-__v"}
+        ]).select('-__v')
+        .then(userData => {
+            if(!userData) {
+                res.status(404).json({message: `There is no user with id ${params.id}`});
+                return;
+            }
+            res.json(userData);
+        })
+        .catch(err => {
+            console.log(err);
+            res.status(400).json(err);
+        });
+    },
+
+
+    //post new user
+    // example data
+    //{
+    //    "username": "lernantino",
+    //    "email": "lernantino@gmail.com"
+    //  }
+    createUser ({ body }, res) {
+        User.create(body)
+        .then(userData => res.json(userData))
+        .catch(err => res.status(400).json(err));
+    },
+
+    //update a user based on ID
+    // example data
+    //{
+    //    "username": "lernantino",
+    //    "email": "lernantino@gmail.com"
+    //  }
+
+    updateUser({params,body}, res) {
+        User.findOneAndUpdate({_id: params.id}, body, {new: true, runValidators: true})
+        .then(userData => {
+            if(!userData) {
+                res.status(404).json({message: `there is no user with id:${params.id}`});
+                return;
+            }
+            res.json(userData);
+        }).catch(err => res.status(400).json(err));
+    }
+
+
+
+
+
+
+}
