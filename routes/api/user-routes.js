@@ -24,9 +24,13 @@ router
 //route options for user by ID which includes get, put and delete
 router
 .route('/:id')
-.get((getUserById)=> {})
-.put((updateUser)=> {})
-.delete((deleteUser)=> {});
+.get(getUserById,(req,res)=> {
+    res.json();
+})
+.put(updateUser,(req, res)=> {
+    res.json();
+})
+.delete(()=> {});
 
 //route options for friend based activity routes
 router
