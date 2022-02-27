@@ -3,12 +3,14 @@ const { Schema, model } = require('mongoose');
 
 //create a new user schema
 const userSchema = new Schema({
+    //username needs to be unique, required, and trim any whitespace
     username: {
         type: String,
         required: true,
         trim: true,
         unique: true
     },
+    //email needs to be unique, and have match validation for structure
     email: {
         type: String,
         required: true,
