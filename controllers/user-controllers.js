@@ -62,7 +62,35 @@ const userController = {
             }
             res.json(userData);
         }).catch(err => res.status(400).json(err));
-    }
+    },
+
+    //delete a user based on ID
+    deleteUser({ params }, res) {
+        //first delete the user
+        User.findOneAndDelete({_id:params.id})
+        .then(userData => {
+            if(!userData) {
+                res.status(404).json({message: `no user found with id ${params.id}`});
+                return;
+            }
+
+            //then remove the user from any friends profiles
+            User.updateMany(
+                {_id: {$in: userData.friends}},
+                {$pull: {friends: params.id}}
+            )
+            .then(() => {
+                //remove any comments from that user
+                Thought.deleteMany({username: userData.username})
+                .then(()=> {
+                    res.json({message: 'Successfully deleted user'})
+                }).catch(err => res.status(400).json(err))
+
+            }).catch(err => res.status(400).json(err))
+
+        }).catch(err => res.status(400).json(err))
+    },
+
 
 
 

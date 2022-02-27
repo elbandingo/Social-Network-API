@@ -30,7 +30,9 @@ router
 .put(updateUser,(req, res)=> {
     res.json();
 })
-.delete(()=> {});
+.delete(deleteUser,(req,res)=> {
+    res.json();
+});
 
 //route options for friend based activity routes
 router
