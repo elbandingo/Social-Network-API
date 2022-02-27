@@ -2,7 +2,7 @@
 const router = require('express').Router();
 
 //import the API routes
-const apiRoutes = require('./api');
+const apiRoutes = require('./api/');
 
 //add the custom prefix of API
 router.use('/api', apiRoutes);

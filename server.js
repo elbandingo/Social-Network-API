@@ -9,10 +9,10 @@ const PORT = process.env.PORT || 3001;
 //add in the middleware requirements for json, and routes
 app.use(express.json());
 app.use(express.urlencoded({extended:true}));
-//app.use(require('./routes'));
+app.use(require('./routes'));
 
 //connect the mongoose DB
-mongoose.connect('mongodb://127.0.0.1:27017/Social-Network-API', {
+mongoose.connect(process.env.MONGODB_URI || 'mongodb://127.0.0.1:27017/Social-Network-API', {
     useNewUrlParser: true,
     useUnifiedTopology: true
 }, (err)=> {
