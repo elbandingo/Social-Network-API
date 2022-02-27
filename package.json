@@ -15,5 +15,11 @@
   "bugs": {
     "url": "https://github.com/elbandingo/Social-Network-API/issues"
   },
-  "homepage": "https://github.com/elbandingo/Social-Network-API#readme"
+  "homepage": "https://github.com/elbandingo/Social-Network-API#readme",
+  "dependencies": {
+    "express": "^4.17.3",
+    "moment": "^2.29.1",
+    "mongodb": "^4.4.0",
+    "mongoose": "^6.2.3"
+  }
 }
