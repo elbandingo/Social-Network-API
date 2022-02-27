@@ -92,6 +92,64 @@ const userController = {
     },
 
 
+    //post request for adding friends at /api/users/:userId/friends/:friendId
+    addFriend({params}, res) {
+        //add friend ID to the userID friend list
+        User.findOneAndUpdate(
+            {_id: params.id},
+            {$addToSet: {friends: params.friendId}},
+            {new: true, runValidators:true}
+        )
+        .then(userData => {
+            if(!userData) {
+                res.status(404).json({message: `There is no user with ID: ${params.userId}`});
+                return;
+            }
+            //add the user IUD to the friend ID list
+            User.findOneAndUpdate(
+                {_id: params.friendId},
+                {$addToSet: {friends: params.userId}},
+                {new: true, runValidators:true}
+            )
+            .then(userData2 => {
+                if(!userData2) {
+                    res.status(404).json({message: `there is no user with ID: ${params.friendId}`});
+                    return;
+                }
+                res.json(userData);
+            }).catch(err => res.json(err));
+
+        }).catch(err => res.json(err));
+    },
+
+    //delete a friend at /api/users/:userId/friends/:friendId
+    deleteFriend({params} , res) {
+        //remove friendId from the userId list
+        User.findOneAndUpdate(
+            {_id: params.userId},
+            {$pull: {friends:params.friendId}},
+            {new:true,runValidators:true}
+        ).then(userData => {
+            if(!userData){
+                res.status(404).json({message: `No user found with ID: ${params.userId}`})
+                return;
+            }
+            //remove the userId from the friend Id list
+            User.findOneAndUpdate(
+            {_id: params.friendId},
+            {$pull: {friends:params.userId}},
+            {new:true,runValidators:true}
+            )
+            .then(userData2 => {
+                if(!userData2){
+                    res.status(404).json({message: `There is no user found with ${params.friendId}`})
+                    return;
+                }
+                res.json({message: 'Successfully deleted friend'});
+            }).catch(err => res.json(err))
+        }).catch(err => res.json(err));
+    }
+
 
 
 
