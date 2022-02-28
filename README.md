@@ -1,5 +1,4 @@
 # Social-Network-API
-[![License](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 ## Description    
 This is a REST API for a social media app. This was built with Express, Mongoose, MongoDB, and Moment.js
 ## Table of Contents:
