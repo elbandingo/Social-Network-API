@@ -108,7 +108,45 @@ deleteThought({params}, res) {
             .catch(err => res.status(500).json(err));
     })
     .catch(err => res.status(500).json(err));
-}
+},
+
+
+//post a reaction to a thought at /api/thoughts/:id/reactions
+addReaction({params,body}, res) {
+    Thought.findOneAndUpdate(
+        {_id: params.thoughtId},
+        {$addToSet: {reactions: body}},
+        {new:true, runValidators:true}
+    )
+    .then(thoughtData => {
+        if(!thoughtData) {
+            res.status(404).json({message:`there is no thought with ID: ${params.thoughtId}`});
+            return;
+        }
+        res.json(thoughtData);
+    })
+    .catch(err => res.status(500).json(err));
+},
+
+
+//delete request to remove a reaction based on ID at /api/thoughts/:id/reactions
+//request should include a reactionId
+deleteReaction({params, body}, res) {
+    Thought.findOneAndUpdate(
+        { _id: params.thoughtId },
+        { $pull: { reactions: { reactionId: body.reactionId } } },
+        { new: true, runValidators: true }   
+    )
+    .then(thoughtData => {
+        if(!thoughtData) {
+            res.status(404).json({message: `there is no thought with this ID`});
+            return;
+        }
+        res.json({message: 'successfully removed reaction to the thought'});
+    })
+    .catch(err => res.status(500).json(err));
+},
+
 
 
 
