@@ -91,7 +91,7 @@ updateThought({params, body}, res) {
 deleteThought({params}, res) {
     //delete the thought from the database
     Thought.findOneAndDelete({_id:params.id})
-    then(thoughtData => {
+    .then(thoughtData => {
         if(!thoughtData) {
             res.status(404).json({message: `there is no message with that id number: ${params.id}`});
             return;
