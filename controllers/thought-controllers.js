@@ -49,7 +49,7 @@ createThought({body}, res) {
     Thought.create(body)
     .then(thoughtData => {
         User.findOneAndUpdate(
-            {_id: params.userId},
+            {_id: body.userId},
             {$push: {thoughts:thoughtData._id}},
             {new:true}
         )
@@ -145,7 +145,7 @@ deleteReaction({params, body}, res) {
         res.json({message: 'successfully removed reaction to the thought'});
     })
     .catch(err => res.status(500).json(err));
-},
+}
 
 
 
