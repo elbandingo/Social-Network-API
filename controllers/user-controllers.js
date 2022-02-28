@@ -96,7 +96,7 @@ const userController = {
     addFriend({params}, res) {
         //add friend ID to the userID friend list
         User.findOneAndUpdate(
-            {_id: params.id},
+            {_id: params.userId},
             {$addToSet: {friends: params.friendId}},
             {new: true, runValidators:true}
         )

@@ -36,9 +36,13 @@ router
 
 //route options for friend based activity routes
 router
-.route("/:userId/friends/friendId")
-.post((addFriend)=>{})
-.delete((deleteFriend)=> {});
+.route("/:userId/friends/:friendId")
+.post(addFriend,(req,res)=>{
+    res.json();
+})
+.delete(deleteFriend,(req,res)=> {
+    res.json();
+});
 
 //export the router
 module.exports = router;
