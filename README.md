@@ -15,7 +15,7 @@ This is a REST API for a social media app. This was built with Express, Mongoose
 4. Run `npm start` to run the express server, and run the API 
 5. use Insomnia to test the REST API
 ### Usage
-[![Watch the Video]](https://drive.google.com/file/d/1ynVsibjLIZT1qmkCYA4v1Svhyhe9HovA/view)
+https://drive.google.com/file/d/1ynVsibjLIZT1qmkCYA4v1Svhyhe9HovA/view
 ### License
 This project is licensed with:
 N/A
